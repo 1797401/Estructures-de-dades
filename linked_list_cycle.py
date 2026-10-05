@@ -3,9 +3,6 @@ class ListNode:
         self.val = x
         self.next = None
 
-    def next_getter(self):
-        return self.next
-
 
 def hasCycle(head: ListNode) -> bool:
     llista=[]
@@ -15,7 +12,7 @@ def hasCycle(head: ListNode) -> bool:
         else:
             llista.append(head)
             if head.next:
-                head=head.next_getter()
+                head=head.next
             else:
                 return False
     
