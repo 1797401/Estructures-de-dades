@@ -1,7 +1,7 @@
 class MinStack:
 
     def __init__(self):
-        self.pila=list()
+        self.stack=list()
         self.minims=list()
 
     def push(self, val: int) -> None:
