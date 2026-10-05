@@ -5,13 +5,13 @@ class ListNode:
 
 
 def hasCycle(head: ListNode) -> bool:
-    llista=[]
+    nodes_visitats=set()
     while True:
-        if head in llista:
+        if head in nodes_visitats:
             return True
         else:
-            llista.append(head)
-            if head.next:
+            nodes_visitats.add(head)
+            if head:
                 head=head.next
             else:
                 return False
