@@ -3,6 +3,19 @@ class ListNode:
         self.val = x
         self.next = None
 
+    def next_getter(self):
+        return self.next
+
 
 def hasCycle(head: ListNode) -> bool:
-    return "prova"
+    llista=[]
+    while True:
+        if head in llista:
+            return True
+        else:
+            llista.append(head)
+            if head.next:
+                head=head.next_getter()
+            else:
+                return False
+    
