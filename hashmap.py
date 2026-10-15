@@ -23,7 +23,6 @@ class MyHashMap:
             for i in self._table[j]:
                 if i[0] == key:
                     i[1] = value
-                    self._n += 1
                     return None
 
             self._table[j].append([key,value])
