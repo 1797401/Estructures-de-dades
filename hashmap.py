@@ -60,12 +60,14 @@ class MyHashMap:
         vell_hash = self._table
         self._table = self._m*[None]
         for i in vell_hash:
-            if i != [None]:
+            if i != None:
                 for sub in i:
-                    self._put(sub)
+                    self.put(sub[0], sub[1])
 
 
     def augment_n(self):
         self._n+=1
         if self._n<self._m//2:
             self.redimendionament()
+
+
