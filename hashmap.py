@@ -46,7 +46,8 @@ class MyHashMap:
             for i in self._table[j]:
                 if i[0] == key:
                     self._table[j].remove(i)
-                    self._n=-1
+                    self._n-=1
+                    return None
         return -1
 
     
