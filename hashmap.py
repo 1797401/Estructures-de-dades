@@ -8,9 +8,10 @@ class MyHashMap:
     def __init__(self, cap=13):
         self._table = cap * [None]   # m posicions, inicialment buides
         self._n = 0                  # nombre de claus desades
+        self._m = cap                  
 
     def _hash_function(self, key):
-        return key % len(self._table)          # h(x) = x % m
+        return key % self._m          # h(x) = x % m
 
     def put(self, key: int, value: int) -> None:
         j = self._hash_function(key)
@@ -53,3 +54,12 @@ class MyHashMap:
     
     def __len__(self):
         return self._n
+
+    def redimendionament(self):
+        self._m = self._m*2-1
+        vell_hash = self._table
+        self._table = self._m*[None]
+        for i in vell_hash:
+            if i != [None]:
+                for sub in i:
+                    self._put(sub)
