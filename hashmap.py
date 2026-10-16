@@ -17,7 +17,7 @@ class MyHashMap:
         j = self._hash_function(key)
         if self._table[j] is None:             # posició lliure
             self._table[j] = [[key, value]]
-            self._n += 1
+            self.augment_n()
             return None
 
         else:
@@ -27,7 +27,7 @@ class MyHashMap:
                     return None
 
             self._table[j].append([key,value])
-            self._n += 1
+            self.augment_n()
             return None
                 
 
@@ -63,3 +63,9 @@ class MyHashMap:
             if i != [None]:
                 for sub in i:
                     self._put(sub)
+
+
+    def augment_n(self):
+        self._n+=1
+        if self._n<self._m//2:
+            self.redimendionament()
