@@ -56,18 +56,21 @@ class MyHashMap:
         return self._n
 
     def redimendionament(self):
+        print("intent")
         self._m = self._m*2-1
         vell_hash = self._table
         self._table = self._m*[None]
+        self._n=0
         for i in vell_hash:
             if i != None:
                 for sub in i:
                     self.put(sub[0], sub[1])
+        print("aconseguio")
 
 
     def augment_n(self):
         self._n+=1
-        if self._n<self._m//2:
+        if self._n>self._m/2:
             self.redimendionament()
 
 
