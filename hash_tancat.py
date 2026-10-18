@@ -48,10 +48,11 @@ class MyHashMap:
     def __len__(self):
         return self._n
 
+
     def _cerca(self, i, key, c):
         j = self._hash_function(i)
-        if self._table[j][2]==LLIURE:
-            return (-1,j)
+        if self._table[j][2]!=OCUPAT:
+            return (-1,self.cerca_2(key, j))
         elif c == 0:
             return (-1,-1)
         elif self._table[j][0]==key:
@@ -67,5 +68,12 @@ class MyHashMap:
             return -1
         else:
             return self._cerca_desesperada(i+1,key,c-1)
+
+    def cerca_2(self, key, n):
+        j = self._hash_function(key)
+        for x, i in enumerate(self._table):
+            if i[0] == key:
+                return x
+        return n
 
 
