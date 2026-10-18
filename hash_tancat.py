@@ -25,6 +25,11 @@ class MyHashMap:
         elif j[1]!=-1:
             self._table[j[1]]=[key, value, OCUPAT]
             self._n+=1
+        elif j[1] == -1:
+            r=self._cerca_desesperada(key, key, len(self._table))
+            if r != -1:
+                self._table[r]=[key, value, ESBORRAT]
+
 
 
     def get(self, key: int) -> int:
@@ -53,5 +58,14 @@ class MyHashMap:
             return (j,None)
         else:
             return self._cerca(i+1,key,c-1)
+
+    def _cerca_desesperada(self, i, key, c):
+        j = self._hash_function(i)
+        if self._table[j][2]==ESBORRAT:
+            return j
+        elif c == 0:
+            return -1
+        else:
+            return self._cerca_desesperada(i+1,key,c-1)
 
 
