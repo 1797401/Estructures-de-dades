@@ -20,6 +20,7 @@ class MyHashMap:
 
     def put(self, key: int, value: int) -> None:
         self._table[self._trobar_forat(key, key)] = [key, value, OCUPAT]
+        self._n += 1
 
 
     def get(self, key: int) -> int:
