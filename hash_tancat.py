@@ -55,7 +55,7 @@ class MyHashMap:
         
         
 
-    def _trobar_forat(self, i, key, c):
+    def _trobar_forat(self, i, key):
         j = self._hash_function(i)
         if self._table[j][2] == LLIURE:
             self._n += 1
