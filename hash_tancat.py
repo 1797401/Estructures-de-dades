@@ -80,6 +80,7 @@ class MyHashMap:
         for x,i in enumerate(self._table):
             if i[2] != LLIURE:
                 t+=(f"posicio: {x} info:{i[0]},{i[1]}, ")
+        t += (f"I la allargada es {self._m} o {len(self._table)}")
 
         return t
 
@@ -87,14 +88,21 @@ class MyHashMap:
             print("intent")
             self._m = self._m*2-1
             vell_hash = self._table
-            self._table = self._m*[None]
+            self._table = self._m * [[None, None, LLIURE]] 
             self._n=0
             for i in vell_hash:
-                if i != None:
-                    for sub in i:
-                        self.put(sub[0], sub[1])
+                if i[2] != LLIURE:
+                    self.put(i[0], i[1])
             print("aconseguio")
 
     
 
-
+H=MyHashMap()
+H.put(1,1)
+H.put(2,1)
+H.put(3,1)
+H.put(4,1)
+H.put(5,1)
+H.put(6,1)
+H.put(7,1)
+print(H)
