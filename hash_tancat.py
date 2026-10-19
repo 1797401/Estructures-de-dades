@@ -23,15 +23,15 @@ class MyHashMap:
 
 
     def get(self, key: int) -> int:
-        r= self._cerca(key, key, len(self._table))
-        if r ==-1:
+        r = self._cerca(key, key, len(self._table))
+        if r == -1:
             return r
         else:
             return self._table[r][1]
 
     def remove(self, key: int) -> None:
         r= self._cerca(key, key, len(self._table))
-        if r !=-1:
+        if r != -1:
             self._table[r]=[None, None, ESBORRAT]
             self._n -= 1
 
@@ -41,14 +41,19 @@ class MyHashMap:
 
     def _cerca(self, i, key, c):
         j = self._hash_function(i)
-        if self._table[j][2]!=OCUPAT:
+        if c == 0:
             return -1
-        elif c == 0:
+        elif self._table[j][2] == LLIURE:
             return -1
-        elif self._table[j][0]==key:
-            return j
+        elif self._table[j][2] == ESBORRAT:
+            return self._cerca(i+1, key, c+1)
         else:
-            return self._cerca(i+1,key,c-1)
+            if key == self._table[j][0]:
+                return j
+            else:
+                return self._cerca(i+1, key, c+1)
+        
+        
 
     def _trobar_forat(self, i, key):
         j = self._hash_function(i)
