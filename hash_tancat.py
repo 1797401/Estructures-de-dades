@@ -13,24 +13,27 @@ class MyHashMap:
 
     def __init__(self, cap=13):
         self._table = cap * [[None, None, LLIURE]]   # m posicions, inicialment buides
-        self._n = 0                  # nombre de claus desades
+        self._n = 0                                    # nombre de claus desades
+        self._m = cap               
 
     def _hash_function(self, key):
-        return key % len(self._table)          # h(x) = x % m
+        return key % self._m          # h(x) = x % m
 
     def put(self, key: int, value: int) -> None:
         self._table[self._trobar_forat(key, key)] = [key, value, OCUPAT]
+        if self._n>self._m/2:
+                    self.redimendionament()
 
 
     def get(self, key: int) -> int:
-        r = self._cerca(key, key, len(self._table))
+        r = self._cerca(key, key, self._m)
         if r == -1:
             return r
         else:
             return self._table[r][1]
 
     def remove(self, key: int) -> None:
-        r= self._cerca(key, key, len(self._table))
+        r= self._cerca(key, key, self._m)
         if r != -1:
             self._table[r]=[None, None, ESBORRAT]
             self._n -= 1
@@ -80,5 +83,18 @@ class MyHashMap:
 
         return t
 
+    def redimendionament(self):
+            print("intent")
+            self._m = self._m*2-1
+            vell_hash = self._table
+            self._table = self._m*[None]
+            self._n=0
+            for i in vell_hash:
+                if i != None:
+                    for sub in i:
+                        self.put(sub[0], sub[1])
+            print("aconseguio")
+
+    
 
 
