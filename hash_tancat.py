@@ -19,30 +19,20 @@ class MyHashMap:
         return key % len(self._table)          # h(x) = x % m
 
     def put(self, key: int, value: int) -> None:
-        j = self._cerca(key, key, len(self._table))
-        if j[0] != -1:
-            self._table[j[0]][1] = value
-        elif j[1]!=-1:
-            self._table[j[1]]=[key, value, OCUPAT]
-            self._n+=1
-        elif j[1] == -1:
-            r=self._cerca_desesperada(key, key, len(self._table))
-            if r != -1:
-                self._table[r]=[key, value, ESBORRAT]
-
+        self._table[self._trobar_forat(key, key)] = [key, value, OCUPAT]
 
 
     def get(self, key: int) -> int:
         r= self._cerca(key, key, len(self._table))
-        if r[0] ==-1:
-            return r[0]
+        if r ==-1:
+            return r
         else:
-            return self._table[r[0]][1]
+            return self._table[r][1]
 
     def remove(self, key: int) -> None:
         r= self._cerca(key, key, len(self._table))
-        if r[0] !=-1:
-            self._table[r[0]]=[None, None, ESBORRAT]
+        if r !=-1:
+            self._table[r]=[None, None, ESBORRAT]
             self._n -= 1
 
     def __len__(self):
@@ -52,28 +42,36 @@ class MyHashMap:
     def _cerca(self, i, key, c):
         j = self._hash_function(i)
         if self._table[j][2]!=OCUPAT:
-            return (-1,self.cerca_2(key, j))
+            return -1
         elif c == 0:
-            return (-1,-1)
+            return -1
         elif self._table[j][0]==key:
-            return (j,None)
+            return j
         else:
             return self._cerca(i+1,key,c-1)
 
-    def _cerca_desesperada(self, i, key, c):
+    def _trobar_forat(self, i, key):
         j = self._hash_function(i)
-        if self._table[j][2]==ESBORRAT:
+        if self._table[j][2] == LLIURE:
             return j
-        elif c == 0:
-            return -1
+        elif self._table[j][2] == ESBORRAT:
+            for x,i in enumerate(self._table):
+                if i[0] == key:
+                    return x
+            return j
         else:
-            return self._cerca_desesperada(i+1,key,c-1)
+            if self._table[j][0] == key:
+                return j
+            else:
+                return self._trobar_forat(i+1, key)
 
-    def cerca_2(self, key, n):
-        j = self._hash_function(key)
-        for x, i in enumerate(self._table):
-            if i[0] == key:
-                return x
-        return n
+    def __str__(self):
+        t=""
+        for x,i in enumerate(self._table):
+            if i[2] != LLIURE:
+                t+=(f"posicio: {x} info:{i[0]},{i[1]}, ")
+
+        return t
+
 
 
