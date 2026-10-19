@@ -20,7 +20,6 @@ class MyHashMap:
 
     def put(self, key: int, value: int) -> None:
         self._table[self._trobar_forat(key, key)] = [key, value, OCUPAT]
-        self._n += 1
 
 
     def get(self, key: int) -> int:
@@ -47,7 +46,7 @@ class MyHashMap:
         elif self._table[j][2] == LLIURE:
             return -1
         elif self._table[j][2] == ESBORRAT:
-            return self._cerca(i+1, key, c+1)
+            return self._cerca(i+1, key, c-1)
         else:
             if key == self._table[j][0]:
                 return j
@@ -56,14 +55,16 @@ class MyHashMap:
         
         
 
-    def _trobar_forat(self, i, key):
+    def _trobar_forat(self, i, key, c):
         j = self._hash_function(i)
         if self._table[j][2] == LLIURE:
+            self._n += 1
             return j
         elif self._table[j][2] == ESBORRAT:
-            for x,i in enumerate(self._table):
-                if i[0] == key:
+            for x,y in enumerate(self._table):
+                if y[0] == key:
                     return x
+            self._n += 1
             return j
         else:
             if self._table[j][0] == key:
