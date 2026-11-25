@@ -1,9 +1,13 @@
 class GrafHash:
 
     def __init__(self, ln=None, lv=None, lp=None):
-        lp=[None]*len(lv)
+        if lp==None:
+            lp=[None]*len(lv)
         self._num=0
         self._nodes={}
+        if ln:
+            for n in ln:
+                self.insert_vertex(n)
         if lv:
             for i,p in zip(lv,lp):
                 self.insert_edge(i[0],i[1],p)
@@ -13,25 +17,26 @@ class GrafHash:
 
     def insert_edge(self, n1, n2, p=1) -> None:
         self.aresta(n1,n2,p)
-        self.aresta(n2,n2,p)
+        self.aresta(n2,n1,p)
         self._num+=1
 
     def aresta(self, n1, n2, p) -> None:
        self._nodes[n1][n2]=p
        
 
-    def antiaresta(self, n1, n2, p) -> None:
+    def antiaresta(self, n1, n2) -> None:
            del self._nodes[n1][n2]
 
     def remove_edge(self, n1, n2) -> None:
-        self.aresta(n1,n2)
-        self.aresta(n2,n2)
+        self.antiaresta(n1,n2)
+        self.antiaresta(n2,n1)
         self._num-=1
 
     def remove_vertex(self, x) -> None:
-        veins=self._nodes[x].keys()
-        for vei in veins:
-            del self._nodes[vei][x]
+        veins=list(self._nodes[x].keys())
+        if veins:
+            for vei in veins:
+                self.remove_edge(vei,x)
         del self._nodes[x]
 
     def has_edge(self, n1, n2) -> bool:
@@ -57,7 +62,23 @@ class GrafHash:
         return self._num
 
     def vertices(self):
-        return self._nodes.keys()
+        return list(self._nodes.keys())
 
     def edges(self, x):
-        return self._nodes[x].keys()
+        return list(self._nodes[x].keys())
+
+
+g = GrafHash(["Sants Est.", "Pl. Sants", "Hostafr."],
+             [["Sants Est.", "Pl. Sants"], ["Pl. Sants", "Hostafr."]],
+             [1585, 511])
+
+print(g.num_edges())
+g.insert_vertex("Esp.")
+g.insert_edge("Hostafr.", "Esp.")       # sense pes: pes 1
+
+print(g.num_edges())                           # retorna 3
+
+
+g.remove_vertex("Pl. Sants")
+
+print(g.num_edges())                           # retorna 1
