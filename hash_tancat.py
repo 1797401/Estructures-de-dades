@@ -96,13 +96,3 @@ class MyHashMap:
             print("aconseguio")
 
     
-
-H=MyHashMap()
-H.put(1,1)
-H.put(2,1)
-H.put(3,1)
-H.put(4,1)
-H.put(5,1)
-H.put(6,1)
-H.put(7,1)
-print(H)
