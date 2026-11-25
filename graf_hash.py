@@ -1,16 +1,17 @@
 class GrafHash:
 
     def __init__(self, ln=None, lv=None, lp=None):
-        if lp==None:
-            lp=[None]*len(lv)
         self._num=0
         self._nodes={}
         if ln:
             for n in ln:
                 self.insert_vertex(n)
-        if lv:
+        if lv!=None and lp != None:
             for i,p in zip(lv,lp):
                 self.insert_edge(i[0],i[1],p)
+        elif lv!=None:
+            for i in lv:
+                self.insert_edge(i[0],i[1])
 
     def insert_vertex(self, x) -> None:
         self._nodes[x]={}
@@ -67,18 +68,6 @@ class GrafHash:
     def edges(self, x):
         return list(self._nodes[x].keys())
 
-
 g = GrafHash(["Sants Est.", "Pl. Sants", "Hostafr."],
-             [["Sants Est.", "Pl. Sants"], ["Pl. Sants", "Hostafr."]],
-             [1585, 511])
-
-print(g.num_edges())
-g.insert_vertex("Esp.")
-g.insert_edge("Hostafr.", "Esp.")       # sense pes: pes 1
-
-print(g.num_edges())                           # retorna 3
-
-
-g.remove_vertex("Pl. Sants")
-
-print(g.num_edges())                           # retorna 1
+             [["Sants Est.", "Pl. Sants"], ["Pl. Sants", "Hostafr."]])
+print(g.weight("Sants Est.", "Pl. Sants"))     # retorna 1585
